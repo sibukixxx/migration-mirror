@@ -1,0 +1,107 @@
+package usecase
+
+import (
+	"context"
+	"encoding/json"
+	"fmt"
+	"os"
+	"path/filepath"
+	"time"
+
+	"github.com/sibukixxx/migration-mirror/internal/domain/media"
+	"github.com/sibukixxx/migration-mirror/internal/infra/agenthttp"
+	"github.com/sibukixxx/migration-mirror/internal/infra/filesystem"
+)
+
+type MediaScanParams struct {
+	Dir           string
+	OutDir        string
+	ManifestPath  string
+	Hash          bool
+	MaxFiles      int
+	HistogramOnly bool
+	SSHTarget     string
+	SSHPort       int
+	SSHKey        string
+	AgentURL      string
+	AgentToken    string
+	AgentTimeout  time.Duration
+}
+
+type MediaScanResult struct {
+	Manifest media.Manifest
+	Path     string
+}
+
+func RunMediaScan(ctx context.Context, params MediaScanParams) (MediaScanResult, error) {
+	manifest, err := scanMediaSource(ctx, params)
+	if err != nil {
+		return MediaScanResult{}, err
+	}
+
+	dest := params.ManifestPath
+	if dest == "" {
+		dest = filepath.Join(params.OutDir, "media-manifest.json")
+	}
+	if err := writeMediaManifest(dest, manifest); err != nil {
+		return MediaScanResult{}, fmt.Errorf("write media manifest: %w", err)
+	}
+	return MediaScanResult{Manifest: manifest, Path: dest}, nil
+}
+
+func scanMediaSource(ctx context.Context, params MediaScanParams) (media.Manifest, error) {
+	var (
+		manifest media.Manifest
+		err      error
+	)
+	switch {
+	case params.AgentURL != "":
+		if params.SSHTarget != "" {
+			return media.Manifest{}, fmt.Errorf("agent-url and ssh cannot be used together")
+		}
+		manifest, err = agenthttp.ScanMedia(ctx, params.AgentURL, params.AgentToken, params.AgentTimeout, agenthttp.MediaScanParams{
+			Dir:           params.Dir,
+			Hash:          params.Hash,
+			MaxFiles:      params.MaxFiles,
+			HistogramOnly: params.HistogramOnly,
+		})
+	case params.SSHTarget != "":
+		manifest, err = filesystem.ScanRemote(ctx, filesystem.RemoteScanConfig{
+			Target: params.SSHTarget,
+			Port:   params.SSHPort,
+			Key:    params.SSHKey,
+			Dir:    params.Dir,
+		}, filesystem.ScanOptions{
+			Hash:      params.Hash,
+			MaxFiles:  params.MaxFiles,
+			WithFiles: !params.HistogramOnly,
+		})
+	default:
+		manifest, err = filesystem.Scan(params.Dir, filesystem.ScanOptions{
+			Hash:      params.Hash,
+			MaxFiles:  params.MaxFiles,
+			WithFiles: !params.HistogramOnly,
+		})
+	}
+	if err != nil {
+		return media.Manifest{}, err
+	}
+	return manifest, nil
+}
+
+func writeMediaManifest(path string, manifest media.Manifest) error {
+	if err := os.MkdirAll(filepath.Dir(path), 0o755); err != nil {
+		return err
+	}
+	f, err := os.Create(path)
+	if err != nil {
+		return err
+	}
+	defer func() {
+		_ = f.Close()
+	}()
+
+	enc := json.NewEncoder(f)
+	enc.SetIndent("", "  ")
+	return enc.Encode(manifest)
+}
