@@ -203,7 +203,6 @@ internal/
 test/
   e2e/                        E2E テストヘルパー（fixtures / stubs / runner）
     tests/                    実テストケース
-legacy-bash/                  v0 相当の bash スクリプト（同じ重み付け、参照用）
 ```
 
 依存方向: `cli → usecase → {domain, infra} → shell`。`domain` は外部に依存しない。
@@ -365,15 +364,6 @@ migration-mirror run --preset minimal \
 | v0.5 | `theme analyze` / `plugins analyze` / `mu-plugins analyze` / 再構築計画レポート | 未着手 |
 | v1.0 | 5 プリセット全実装 + Cloudflare-native CI / verification pipeline | 未着手 |
 
-## legacy-bash/
-
-`legacy-bash/emdash-migration-audit.sh` は Go 化前の同等機能を持つ bash スクリプト。
-
-- 軽量（Go バイナリを置けないリモート環境向け）
-- 同じスコア重み付け（変更時は両方更新するルール）
-- `migration-mirror audit` が動かない環境での fallback / リファレンス実装
-
-詳細は [`legacy-bash/README.md`](legacy-bash/README.md)。
 
 ## ライセンス
 
