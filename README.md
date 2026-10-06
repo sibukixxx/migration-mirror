@@ -40,7 +40,7 @@ See [Quick Start](#quick-start), [Commands](#v01--v02--v04-commands), and the do
 
 
 > [!NOTE]
-> **Repository transition:** this repository remains the canonical source until the planned migration to `migration-mirror`. The replacement repository will be created from cleaned history after verification. Until then, commands, binary names and links intentionally use the current repository/product names.
+> **Canonical repository:** `migration-mirror` is the active source of truth. WordPress → EmDash is the first supported adapter pair, not the product boundary.
 
 
 <!-- ecosystem-expansion:v1 -->
@@ -48,7 +48,7 @@ See [Quick Start](#quick-start), [Commands](#v01--v02--v04-commands), and the do
 
 This repository is one capability owner in the TechVit ecosystem. New ideas should extend the existing graph before creating another silo.
 
-**Canonical responsibility:** WordPress assessment / migration evidence producer
+**Canonical responsibility:** migration assessment, source/target integrity verification, and reproducible cutover evidence
 
 When new work appears:
 
@@ -58,7 +58,7 @@ When new work appears:
 4. **Create a new repository only** for a distinct product/vertical with its own lifecycle, deployment/security boundary, or OSS/commercial boundary. Its README must declare upstream/downstream owners from day one.
 5. **Experiments may end without losing the asset.** Move validated rules, contracts, fixtures, and learnings into the canonical owner, then freeze/archive the duplicate implementation.
 
-**Route new work:** WordPress固有のinspection/evidence extractionをここへ追加し、汎用Assessment/Recommendationやcompany workflowはdownstreamへ渡す。
+**Route new work:** migration固有のinspection/evidence/verificationをここへ追加する。WordPressやEmDash固有処理はadapterとして閉じ込め、business recommendationやcompany workflowはdownstreamへ渡す。
 
 Cross-cutting owners: TechVit Admin = company operations; TechVit Platform = shared cloud/bootstrap/identity; Insight = research semantics; techvit-insight = managed research; Relayboard = work execution; AI Allowance Guard = privileged-action authority; EC Hub = commerce; AffiliateMediaOS/VideoForge = content production; ja-company-* = company-data/outreach producers; public/product sites = acquisition surfaces.
 
@@ -87,17 +87,17 @@ The public OSS boundary ends at technical facts, evidence, signals, deterministi
 - Implemented commands cover assessment/audit, DB planning, media inventory, SEO metadata/redirect extraction, URL-map comparison, environment-secret checks, source/target content snapshots and deterministic content verification.
 - Independent verification can compare WordPress with EmDash using hashes and structural evidence without storing raw post bodies, producing CI/cutover findings and a resolved ID ledger.
 - The toolkit intentionally stops at technical facts, signals, snapshots and verification. Customer recommendations, estimates, pricing, CRM and managed multi-customer workflows remain private/downstream concerns.
-- The successor `migration-mirror` is intended to generalize the verification model beyond WordPress → EmDash; current `migration-mirror` commands remain canonical until migration.
+- `migration-mirror` is now canonical. WordPress → EmDash remains the first concrete adapter pair while the verification model is generalized to other migration sources and targets.
 <!-- /current-implementation -->
 
 <!-- role-boundary:v1 -->
 ## Role and boundaries
 
-**Role:** WordPress migrationのtechnical facts・signals・snapshots・verification evidenceを生成する **evidence producer / verification toolkit**。
+**Role:** migration全般のtechnical facts・signals・source/target snapshots・verification evidenceを生成する **evidence producer / verification toolkit**。
 
 ### Owns
 
-- read-only WordPress technical assessment
+- read-only migration assessment, with WordPress as the first source adapter
 - deterministic technical signals and reference scores
 - migration/content verification artifacts
 - source provenance and reproducible cutover evidence
@@ -132,7 +132,6 @@ Public artifacts should remain consumer-neutral. A downstream system may interpr
 - [Design Principles](#design-principles)
 - [HTTP Agent Schema](#http-agent-schema)
 - [Roadmap](#roadmap)
-- [Legacy Bash](#legacy-bash)
 - [Contributing](#contributing)
 - [Support the Project](#support-the-project)
 - [License](#license)
@@ -327,7 +326,6 @@ internal/
   shell/        thin os/exec wrapper
 test/
   e2e/          end-to-end helpers and fixtures
-legacy-bash/    reference bash implementation
 ```
 
 ## Assessment scope and non-goals
@@ -489,13 +487,6 @@ For `run --preset`, the preferred form is:
 | v0.5 | `theme analyze`, `plugins analyze`, `mu-plugins analyze`, rebuild planning report | not started |
 | v1.0 | Full implementation of all five presets plus Cloudflare-native CI / verification pipeline | not started |
 
-## Legacy Bash
-
-`legacy-bash/emdash-migration-audit.sh` is the pre-Go reference implementation.
-
-- Useful in very constrained remote environments
-- Keeps the same scoring weights
-- Serves as a fallback and behavioral reference
 
 ## Contributing
 
