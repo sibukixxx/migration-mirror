@@ -196,8 +196,6 @@ migration-mirror audit --wp-root /var/www/html
 # 3. Audit via HTTP agent
 migration-mirror audit \
   --agent-url https://example.com/wp-json/migration-mirror/v1/audit \
-  --agent-token secret-token
-
 # 4. Override the legacy risk-band policy (compatibility path)
 migration-mirror audit \
   --wp-root /var/www/html \
@@ -208,9 +206,7 @@ migration-mirror media scan --dir /var/www/html/wp-content/uploads --hash
 
 # 6. Scan uploads via HTTP agent
 migration-mirror media scan \
-  --agent-url https://example.com/wp-json/migration-mirror/v1/media-scan \
-  --agent-token secret-token \
-  --dir wp-content/uploads
+  --agent-url https://example.com/wp-json/migration-mirror/v1/media-scan \  --dir wp-content/uploads
 
 # 7. Dry-run a preset, then apply it
 migration-mirror run --preset minimal --wp-root /var/www/html --dry-run
@@ -228,9 +224,7 @@ migration-mirror secrets check --profile media-heavy --json
 # 10. Run preset minimal via split agent endpoints
 migration-mirror run --preset minimal \
   --agent-audit-url https://example.com/wp-json/migration-mirror/v1/audit \
-  --agent-media-url https://example.com/wp-json/migration-mirror/v1/media-scan \
-  --agent-token secret-token \
-  --wp-root /var/www/html \
+  --agent-media-url https://example.com/wp-json/migration-mirror/v1/media-scan \  --wp-root /var/www/html \
   --apply
 
 # 11. Use the same public risk-band policy during preset execution
