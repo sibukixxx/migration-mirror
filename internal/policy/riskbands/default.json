@@ -1,0 +1,29 @@
+{
+  "bands": [
+    {
+      "max_score": 20,
+      "level": "Simple",
+      "estimate": "not provided by public OSS"
+    },
+    {
+      "max_score": 50,
+      "level": "Standard",
+      "estimate": "not provided by public OSS"
+    },
+    {
+      "max_score": 90,
+      "level": "Complex",
+      "estimate": "not provided by public OSS"
+    },
+    {
+      "max_score": 130,
+      "level": "High Risk",
+      "estimate": "not provided by public OSS"
+    },
+    {
+      "max_score": -1,
+      "level": "Rebuild Project",
+      "estimate": "not provided by public OSS"
+    }
+  ]
+}
