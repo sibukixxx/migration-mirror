@@ -74,8 +74,6 @@ migration-mirror audit --wp-root /var/www/html
 # 也可以通过只读 HTTP agent 审计
 migration-mirror audit \
   --agent-url https://example.com/wp-json/migration-mirror/v1/audit \
-  --agent-token secret-token
-
 # 3. 扫描媒体文件并生成清单
 migration-mirror media scan --dir /var/www/html/wp-content/uploads --hash
 
