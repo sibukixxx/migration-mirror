@@ -69,8 +69,6 @@ migration-mirror audit --wp-root /var/www/html
 # HTTP agent 経由でも監査可能
 migration-mirror audit \
   --agent-url https://example.com/wp-json/migration-mirror/v1/audit \
-  --agent-token secret-token
-
 # legacy risk-band policyの差し替え（互換用途）
 migration-mirror audit \
   --wp-root /var/www/html \
@@ -82,9 +80,7 @@ migration-mirror media scan --dir /var/www/html/wp-content/uploads --hash
 
 # HTTP agent 経由でも media scan 可能
 migration-mirror media scan \
-  --agent-url https://example.com/wp-json/migration-mirror/v1/media-scan \
-  --agent-token secret-token \
-  --dir wp-content/uploads
+  --agent-url https://example.com/wp-json/migration-mirror/v1/media-scan \  --dir wp-content/uploads
 
 # 4. 「最低検証」プリセットを dry-run で確認 → apply
 migration-mirror run --preset minimal --wp-root /var/www/html --dry-run
@@ -104,9 +100,7 @@ migration-mirror secrets check --profile media-heavy --json
 # 7. HTTP agent 経由で preset minimal を実行
 migration-mirror run --preset minimal \
   --agent-audit-url https://example.com/wp-json/migration-mirror/v1/audit \
-  --agent-media-url https://example.com/wp-json/migration-mirror/v1/media-scan \
-  --agent-token secret-token \
-  --wp-root /var/www/html \
+  --agent-media-url https://example.com/wp-json/migration-mirror/v1/media-scan \  --wp-root /var/www/html \
   --apply
 
 # 8. preset 実行でも同じ policy file を使える
@@ -345,9 +339,7 @@ Go 側の優先順位は `agent-url > ssh > local`。`--agent-url` と `--ssh` �
 ```bash
 migration-mirror run --preset minimal \
   --agent-audit-url https://example.com/wp-json/migration-mirror/v1/audit \
-  --agent-media-url https://example.com/wp-json/migration-mirror/v1/media-scan \
-  --agent-token secret-token \
-  --wp-root /var/www/html \
+  --agent-media-url https://example.com/wp-json/migration-mirror/v1/media-scan \  --wp-root /var/www/html \
   --apply
 ```
 
