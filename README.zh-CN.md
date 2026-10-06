@@ -172,8 +172,6 @@ make test
 make vet
 ```
 
-旧版 Bash 实现位于 [`legacy-bash/`](legacy-bash/)，作为受限远程环境中的备用方案和行为参考。
-
 ## 支持项目
 
 如果 `migration-mirror` 为你的迁移工作节省了时间，可以通过 [GitHub Sponsors](https://github.com/sponsors/sibukixxx) 支持项目。

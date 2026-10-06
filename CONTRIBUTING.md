@@ -2,7 +2,7 @@
 
 Project overview: [English](README.md) | [日本語](README.ja.md) | [简体中文](README.zh-CN.md)
 
-migration-mirror は **EmDash 移行を Unix 思想で扱う orchestrator** です。設計の軸を外さない PR を歓迎します。
+migration-mirror は **migration assessment / integrity verification を Unix 思想で扱う toolkit** です。WordPress → EmDash は最初の adapter pair であり、製品境界ではありません。
 
 ## 設計原則
 
@@ -78,7 +78,6 @@ PR で minimum 通すべきもの:
 - `MIGRATION_MIRROR_E2E_TEST_ENABLED=true go test ./test/e2e/tests/...` 全て pass
 - `golangci-lint run -c .golangci.yml` 全て pass
 - `go build ./...` 成功
-- スコアリング規則を変えるなら `legacy-bash/emdash-migration-audit.sh` の重みも合わせて更新（互換性維持）
 
 ## ロードマップ
 

@@ -1,4 +1,4 @@
-# Current implementation assessment
+# Current implementation assessment — migration-mirror
 
 This inventory was produced from command registration and use-case/adapter code, not from README claims.
 
@@ -26,7 +26,7 @@ The executable is a thin Cobra entry point. `internal/cli` owns flags and output
 | `assess` | IMPLEMENTED (this change) | Read-only aggregation with schema 1.0 artifacts |
 | `public-audit` | PLANNED | Kept separate because public evidence is not a full assessment |
 
-No registered command was classified DEAD/UNUSED. The `legacy-bash` implementation is intentionally retained as compatibility/fallback reference rather than registered Go CLI code.
+No registered command was classified DEAD/UNUSED. The Go CLI is the only supported implementation; the pre-Go bash prototype was removed during the migration-mirror cutover.
 
 ## Technical debt and gaps
 
