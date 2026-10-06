@@ -1,6 +1,6 @@
 # Active development roadmap
 
-migration-mirror remains an active TechVit OSS capability owner for **WordPress assessment / migration evidence / cutover verification**.
+migration-mirror is the TechVit OSS capability owner for **migration assessment / source-target integrity verification / cutover evidence**. WordPress → EmDash is the first supported adapter pair.
 
 This file tracks the immediate issue set to open after repository Issues are enabled.
 
