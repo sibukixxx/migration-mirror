@@ -13,7 +13,7 @@ GOLANGCI_LINT ?= golangci-lint
 VERSION ?= $(shell git describe --tags --always --dirty 2>/dev/null || echo dev)
 LDFLAGS := -X github.com/sibukixxx/migration-mirror/internal/cli.Version=$(VERSION)
 
-.PHONY: help build test test-e2e test-all vet lint golangci golangci-fix fmt fix run clean install dist
+.PHONY: help build test test-e2e test-all vet lint golangci golangci-fix fmt fmt-check fix run clean install dist release-check
 
 help: ## Show this help
 	@grep -E '^[a-zA-Z0-9_-]+:.*?##' $(MAKEFILE_LIST) | awk 'BEGIN{FS=":.*?##"}{printf "\033[36m%-15s\033[0m %s\n", $$1, $$2}'
@@ -44,6 +44,16 @@ lint: vet golangci ## Run static analysis
 
 fmt: ## Format Go files with gofmt
 	@if [ -n "$(GO_FILES)" ]; then gofmt -w $(GO_FILES); fi
+
+fmt-check: ## Verify Go formatting without modifying files
+	@files="$(gofmt -l $(GO_FILES))"; \
+	if [ -n "$files" ]; then \
+	  echo "The following files need gofmt:"; \
+	  echo "$files"; \
+	  exit 1; \
+	fi
+
+release-check: fmt-check lint test-all build dist ## Run the deterministic OSS release gate
 
 fix: fmt golangci-fix ## Format code and apply autofixable lint rules
 
