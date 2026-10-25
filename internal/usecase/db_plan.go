@@ -227,36 +227,36 @@ func writeDBPlanMarkdown(path string, plan DBPlan) error {
 
 	var sb strings.Builder
 	sb.WriteString("# DB Migration Plan\n\n")
-	sb.WriteString(fmt.Sprintf("- Generated: %s\n", plan.GeneratedAt))
-	sb.WriteString(fmt.Sprintf("- Source summary: %s\n", plan.Source))
-	sb.WriteString(fmt.Sprintf("- Target preset: %s\n", plan.TargetPreset))
-	sb.WriteString(fmt.Sprintf("- Strategy: %s\n\n", plan.Strategy))
+	fmt.Fprintf(&sb, "- Generated: %s\n", plan.GeneratedAt)
+	fmt.Fprintf(&sb, "- Source summary: %s\n", plan.Source)
+	fmt.Fprintf(&sb, "- Target preset: %s\n", plan.TargetPreset)
+	fmt.Fprintf(&sb, "- Strategy: %s\n\n", plan.Strategy)
 	sb.WriteString("## Tables\n\n")
 	for _, table := range plan.Tables {
-		sb.WriteString(fmt.Sprintf("- `%s`: %s — %s\n", table.Name, table.Action, table.Reason))
+		fmt.Fprintf(&sb, "- `%s`: %s — %s\n", table.Name, table.Action, table.Reason)
 	}
 	if len(plan.Notes) > 0 {
 		sb.WriteString("\n## Notes\n\n")
 		for _, note := range plan.Notes {
-			sb.WriteString(fmt.Sprintf("- %s\n", note))
+			fmt.Fprintf(&sb, "- %s\n", note)
 		}
 	}
 	if len(plan.Risks) > 0 {
 		sb.WriteString("\n## Risks\n\n")
 		for _, risk := range plan.Risks {
-			sb.WriteString(fmt.Sprintf("- %s\n", risk))
+			fmt.Fprintf(&sb, "- %s\n", risk)
 		}
 	}
 	if len(plan.TargetNotes) > 0 {
 		sb.WriteString("\n## Target notes (EmDash / Cloudflare)\n\n")
 		for _, note := range plan.TargetNotes {
-			sb.WriteString(fmt.Sprintf("- %s\n", note))
+			fmt.Fprintf(&sb, "- %s\n", note)
 		}
 	}
 	if len(plan.NextActions) > 0 {
 		sb.WriteString("\n## Next actions\n\n")
 		for i, action := range plan.NextActions {
-			sb.WriteString(fmt.Sprintf("%d. %s\n", i+1, action))
+			fmt.Fprintf(&sb, "%d. %s\n", i+1, action)
 		}
 	}
 
