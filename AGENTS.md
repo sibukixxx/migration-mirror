@@ -45,3 +45,8 @@ Small Go migration/orchestration CLI. It wraps existing tools such as `wp`, `wra
 - Applicable tests/vet pass.
 - Changed CLI/output contracts are covered by tests/docs.
 - Destructive/external actions were not performed merely to prove completion.
+
+
+- When a repository's documentation and its existing code disagree, follow the conventions used in the existing code, and in your final reply point out each inconsistency you found between the documentation and the code.
+
+- 不要なセカンダリラベルや説明を避ける。レイアウトに説明させる。
