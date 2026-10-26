@@ -39,6 +39,9 @@ func TestRunAuditFromSourceIncludesWarnings(t *testing.T) {
 	if err != nil {
 		t.Fatalf("RunAuditFromSource() error = %v", err)
 	}
+	if got.Bundle.SchemaVersion != "1.0" || got.Bundle.Tool != "migration-mirror" {
+		t.Fatalf("unexpected producer contract: %+v", got.Bundle)
+	}
 	if len(got.Bundle.Warnings) != 1 {
 		t.Fatalf("warnings: want 1, got %d", len(got.Bundle.Warnings))
 	}

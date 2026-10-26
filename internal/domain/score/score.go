@@ -27,8 +27,8 @@ type Reason struct {
 
 // Result is the public output of the scorer.
 type Result struct {
-	Score    int      `json:"score"`
-	Level    Level    `json:"level"`
+	Score int   `json:"score"`
+	Level Level `json:"level"`
 	// Estimate is retained for summary.json compatibility. The bundled public
 	// policy does not provide estimates or pricing.
 	Estimate string   `json:"estimate"`

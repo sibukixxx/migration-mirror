@@ -493,3 +493,7 @@ If `migration-mirror` saves you migration time, consider [sponsoring on GitHub S
 ## License
 
 MIT
+
+### Audit artifact contract
+
+New `summary.json` audit bundles declare `schema_version: "1.0"` and `tool: "migration-mirror"`. `version` identifies the executable build, not the artifact schema. Downstream consumers must validate the schema independently of the build version.

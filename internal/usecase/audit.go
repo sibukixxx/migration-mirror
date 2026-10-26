@@ -53,11 +53,12 @@ func RunAuditFromSource(ctx context.Context, src source.Auditor, params AuditPar
 	}
 
 	bundle := reporting.Bundle{
-		GeneratedAt: time.Now().UTC().Format(time.RFC3339),
-		Tool:        "migration-mirror",
-		Version:     params.Version,
-		Audit:       a,
-		Score:       s,
+		SchemaVersion: "1.0",
+		GeneratedAt:   time.Now().UTC().Format(time.RFC3339),
+		Tool:          "migration-mirror",
+		Version:       params.Version,
+		Audit:         a,
+		Score:         s,
 	}
 	if reporter, ok := src.(source.WarningReporter); ok {
 		bundle.Warnings = reporter.Warnings()

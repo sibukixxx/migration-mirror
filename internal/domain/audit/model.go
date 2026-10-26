@@ -60,13 +60,13 @@ type PluginsStats struct {
 }
 
 type CustomStats struct {
-	CustomPostTypeCount            int `json:"custom_post_type_count"`
-	CustomTaxonomyCount            int `json:"custom_taxonomy_count"`
-	MUPluginCount                  int `json:"mu_plugin_count"`
-	MUPluginHookLikeOccurrences    int `json:"mu_plugin_hook_like_occurrences"`
-	ShortcodePostCount             int `json:"shortcode_post_count"`
-	SEOMetaCount                   int `json:"seo_meta_count"`
-	SerializedMetaCount            int `json:"serialized_meta_count"`
+	CustomPostTypeCount         int `json:"custom_post_type_count"`
+	CustomTaxonomyCount         int `json:"custom_taxonomy_count"`
+	MUPluginCount               int `json:"mu_plugin_count"`
+	MUPluginHookLikeOccurrences int `json:"mu_plugin_hook_like_occurrences"`
+	ShortcodePostCount          int `json:"shortcode_post_count"`
+	SEOMetaCount                int `json:"seo_meta_count"`
+	SerializedMetaCount         int `json:"serialized_meta_count"`
 	// OversizedContentCount counts published posts whose body alone exceeds
 	// ~90KB. Cloudflare D1 rejects single statements over ~100KB
 	// (SQLITE_TOOBIG), so these posts need chunked import handling.

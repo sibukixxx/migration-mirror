@@ -46,10 +46,10 @@ fmt: ## Format Go files with gofmt
 	@if [ -n "$(GO_FILES)" ]; then gofmt -w $(GO_FILES); fi
 
 fmt-check: ## Verify Go formatting without modifying files
-	@files="$(gofmt -l $(GO_FILES))"; \
-	if [ -n "$files" ]; then \
+	@files="$$(gofmt -l $(GO_FILES))"; \
+	if [ -n "$$files" ]; then \
 	  echo "The following files need gofmt:"; \
-	  echo "$files"; \
+	  echo "$$files"; \
 	  exit 1; \
 	fi
 
