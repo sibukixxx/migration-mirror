@@ -1,24 +1,25 @@
-# Migration audit — migration-mirror
+# OSS migration verification — migration-mirror
 
-監査日: 2026-10-25。作業中の記録。未実施・未完了を成功扱いしない。
+検証日: 2026-10-26。実装コードの検証対象head: `f47bcb6268a5e2ca54fac6e052baa14eeb7fb4b8`。本書の追記commitは資料のみ。
 
-## 正本と比較対象
+## 実装と実行結果
 
-- 正本: sibukixxx/migration-mirror, main `6a41d5eae22b0bfe6ced16c17739163c3fccd0d4`
-- 旧実装: sibukixxx/wp2emdash, main `1847da3fc926b6f7d6e0e93f6b8fc21642e7ff0c`
-- 比較単位: 機能・API・入出力契約。名称変更後のファイルだけを機械的に欠落判定しない。
+- `make release-check`（fmt/lint/vet/race unit/CLI E2E/build/4 platform dist）とgovulncheck: 成功（Go 1.26.10）。
+- 新audit artifactはschema_version=1.0、tool=migration-mirror。実行build versionとschemaを分離。
+- private techvit-businessは新schemaと既存wp2emdash 1.xを受理。修正前の拒否を回帰テストで確認、修正後の全verify成功。
+- 新producerの実CLI audit→実consumer CLI assessでnormalized evidence/report生成成功。WordPress/phpは既存E2Eスタブを使用。顧客のlive WordPress・外部CLI接続は未実施。
+- 汎用移行・SEO/media/content検証を保持。
 
-WordPress assessment、SEO/redirect、media manifest/verification、両側snapshot、fingerprint、比較、JSON/Markdown証跡、dry-run境界は名称正規化後の既存実装に維持。汎用移行検証の構成を保持。
+## 公開前監査
 
-## 今回の修正と検証
+- GitHub APIで全refs（main、作業branch、残存branch、PR head参照）と到達可能なcommitのtreeを列挙。列挙時点で35 commits / 161 unique blobsを取得、欠落・truncated treeなし。以降の当作業commitは現行tree検査と併せて確認。
+- Gitleaks既定ruleで履歴の全blobとcommit metadataを検査。secret検出なし。
+- PR最終treeは全fileを用意してGitleaks成功。localの検証対象sourceとGitHub PR headのblob hash一致を確認。
+- 全履歴のauthorはYuichi Takada、メールは866555+sibukixxx@users.noreply.github.com。LICENSEはMIT。
+- CI startup_failureはテスト実行前の起動失敗。CI成功とは記録せず、上記local gateを代替証拠とする。既存CIは削除していない。
 
-Goの最低版を1.26.10へ更新。既知の標準ライブラリ脆弱性に対応。既存CIは保持し、startup_failureをコードテスト失敗と混同しない。Cloudflare CI移行はplatform #41/#60の検証後に別途確定する。
+## 未完了の公開操作
 
-- テスト・vet・lint・build: 実行中。結果はこのファイルに追記する。
-- govulncheck: 実行予定。
-- 現行ツリー/公開予定全Git履歴のsecret scan、author表示名・メール確認: 公開前の再確認が必要。
-- README Quick Start/外部consumer/ライセンス/リリースtag: 最終確認が必要。
-- Public化、匿名clone、Release: 未実施。ゲート未完了のまま公開しない。
-- 旧リポジトリ: 保全。削除・archive・force pushは行わない。
+4正本はPrivate。Public化・Release作成・匿名clone/downloadは未実施。GitHub connectorはadministration/Release作成を提供せず、ブラウザは未ログイン。移行公開完了とは扱わない。公開後に匿名repository/README/LICENSE/Release/Quick Startを再検証して公式サイトをAvailableへ変更する。
 
-環境リセット前の検証結果は現在の作業ツリーの成功証拠として流用しない。
+予定初回tag: v0.1.0。旧repoは削除・archiveせず、共有履歴のforce pushなし。未完了Issueを閉じない。DNS・メール・他Workers/Pages・顧客環境は変更していない。
