@@ -19,12 +19,13 @@ import (
 // type means downstream tools can consume a single JSON document instead of
 // joining several files together.
 type Bundle struct {
-	GeneratedAt string           `json:"generated_at"`
-	Tool        string           `json:"tool"`
-	Version     string           `json:"version"`
-	Audit       audit.Audit      `json:"audit"`
-	Score       score.Result     `json:"score"`
-	Warnings    []source.Warning `json:"warnings,omitempty"`
+	SchemaVersion string           `json:"schema_version"`
+	GeneratedAt   string           `json:"generated_at"`
+	Tool          string           `json:"tool"`
+	Version       string           `json:"version"`
+	Audit         audit.Audit      `json:"audit"`
+	Score         score.Result     `json:"score"`
+	Warnings      []source.Warning `json:"warnings,omitempty"`
 }
 
 // WriteAll writes summary.json + risk-report.md to outDir.
